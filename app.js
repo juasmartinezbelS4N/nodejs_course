@@ -1,36 +1,26 @@
-import https from "https"
+import http from "http"
 import fs from "fs"
+import os from 'os'
 
-const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
-}
 
-const port = 4000
+const port = 4000;
 
-const server = https.createServer(options, (req, res) => {
-  res.writeHead(200)
-  res.end("Hello world")
-})
+const server = http.createServer((req, res) => {
+  fs.readFile('page.html', (err, data) => {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    console.log(data.toString());
+    console.log(os.arch());
+    console.log(os.constants);
+    console.log(os.cpus);
+    console.log(os.endianness);
+    console.log(os.EOL);
+    console.log(os.freemem);
+    console.log(os.hostname);
+    return res.end();
+  });
+});
 
 server.listen(port, () => {
-  console.log(`Server running 🚀 at https://localhost:${port}/`)
-})
-
-
-https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (response) => {
-  let data = '';
-
-  // A chunk of data has been received.
-  response.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  // The whole response has been received. Print out the result.
-  response.on('end', () => {
-    console.log(JSON.parse(data).explanation);
-  });
-
-}).on('error', (error) => {
-  console.log("Error: " + error.message);
+  console.log(`Server running 🚀 at http://localhost:${port}/`);
 });
