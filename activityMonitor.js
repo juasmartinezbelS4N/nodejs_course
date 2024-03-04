@@ -27,12 +27,10 @@ function timeout() {
 }
 
 async function main() {
-  let minute = 0;
-  const fullLog = []
+  let fullLog = []
   const commands = getCommands()
-
-  while(true){
-    await timeout()
+  let minute = 0
+  setInterval(() => {
     minute++
     execProcess(commands, (stderr, stdout) => {
       if (stderr) {
@@ -41,14 +39,17 @@ async function main() {
       console.clear()
       console.log(stdout)
       fullLog.push(`${Date.now()}: ${stdout}`)
-      if(minute % 600 === 0){
-        fs.appendFile('activityMonitor.log', fullLog.join(''), (err) => {
-          if (err) throw err;
-        });
+      if (minute % 600 === 0) {
+        fs.appendFile("activityMonitor.log", fullLog.join(""), (err) => {
+          if (err) {
+            console.error(err)
+            throw err
+          }
+          fullLog = []
+        })
       }
     })
-  }
+  }, 100)
 }
 
-
-main();
+main()
