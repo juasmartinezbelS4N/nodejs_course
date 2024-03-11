@@ -33,7 +33,7 @@ class EventEmitter {
   once(eventName, fn) {
     const onceFunction = () => {
       fn();
-      this.off(eventName, fn);
+      this.off(eventName, onceFunction);
     }
     this.on(eventName, onceFunction);
   }
