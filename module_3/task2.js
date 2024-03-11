@@ -1,4 +1,3 @@
-import fs from "fs"
 import EventEmitter from "./eventEmitter.js"
 
 class WithTime extends EventEmitter {
