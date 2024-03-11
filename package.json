@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "task1": "nodemon module_3/task1.js"
+    "task1": "nodemon module_3/task1.js",
+    "task2": "nodemon module_3/task2.js"
   },
   "repository": {
     "type": "git",
