@@ -9,20 +9,11 @@ const onError = (err) => {
 }
 
 const processedJson = (json) => {
-  const fullItems = []
-  const byLine = json.split("\r")
-  const header = byLine[0].toLowerCase().split(",")
-  header.splice(2, 1)
-  for (let i = 1; i < byLine.length; i++) {
-    const line = byLine[i].substring(1).split(",")
-    line.splice(2, 1)
-    const parsed = {}
-    for (const index in line) {
-      parsed[header[index]] = line[index]
-    }
-    fullItems.push(parsed)
+  const parsedJson = {}
+  for (const key of Object.keys(json)) {
+    parsedJson[key.toLocaleLowerCase()] = json[key]
   }
-  return fullItems
+  return parsedJson
 }
 
 async function fromCSVtoTXT() {
@@ -31,15 +22,10 @@ async function fromCSVtoTXT() {
     readeableStream.setEncoding("utf8")
     const writeableStream = fs.createWriteStream(TXT_FILE_PATH)
 
-    readeableStream.on("data", (data) => {
-      const processed = processedJson(data)
-      processed.forEach((line) => {
-        writeableStream.write(JSON.stringify(line))
-        writeableStream.write("\n")
-      })
-    })
-
-    readeableStream.pipe(csvtojson())
+    readeableStream.pipe(csvtojson({ignoreColumns: /Amount/})).subscribe((json, _lineNumber) => {
+      const processed = processedJson(json)
+      writeableStream.write(`${JSON.stringify(processed)}\n`)
+    }, onError)
     readeableStream.on("end", () => {
       console.log("finish")
     })
