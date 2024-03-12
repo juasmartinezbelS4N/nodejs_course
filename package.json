@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "task1": "nodemon module_3/task1.js",
+    "task2": "nodemon module_3/task2.js",
+    "task3": "nodemon module_3/task3.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +23,8 @@
   "homepage": "https://github.com/juasmartinezbelS4N/nodejs_course#readme",
   "devDependencies": {
     "nodemon": "^3.0.3"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
   }
 }
