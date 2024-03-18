@@ -58,16 +58,15 @@ describe("Nager.Date API", () => {
           `/LongWeekend/${validYear}/${validContry}`
         )
         expect(status).toEqual(200)
-        expect(body).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              startDate: expect.any(String),
-              endDate: expect.any(String),
-              dayCount: expect.any(Number),
-              needBridgeDay: expect.any(Boolean),
-            }),
-          ])
-        )
+        expect(body.length).toBeGreaterThan(0)
+        body.forEach((result: any) => {
+          expect(result).toMatchSnapshot({
+            startDate: expect.any(String),
+            endDate: expect.any(String),
+            dayCount: expect.any(Number),
+            needBridgeDay: expect.any(Boolean),
+          })
+        })
       })
       it("should return 400 if year is invalid", async () => {
         const { status } = await request(PUBLIC_HOLIDAYS_API_URL).get(
