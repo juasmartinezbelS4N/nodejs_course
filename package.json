@@ -9,8 +9,9 @@
     "task1": "nodemon module_3/task1.js",
     "task2": "nodemon module_3/task2.js",
     "task3": "nodemon module_3/task3.js",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test": "jest src/test/unit src/test/integration",
+    "test:coverage": "jest src/test/unit src/test/integration --coverage",
+    "test:e2e": "jest src/test/e2e"
   },
   "repository": {
     "type": "git",
