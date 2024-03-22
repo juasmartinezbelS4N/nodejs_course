@@ -3,7 +3,7 @@ import {
   returnInvalidPageError,
   parseData,
   returnServerError,
-  returnWrongDataError,
+  returnBadRequestError,
   parseRequestBody,
 } from "./utils.js"
 import database from "./database.js"
@@ -49,7 +49,7 @@ export const patchHobbies = async (req, res) => {
   }
   const reqHobbies = reqBody.hobbies
   if (!reqHobbies) {
-    returnWrongDataError(res)
+    returnBadRequestError(res)
     return
   }
   const userHobbies = data.user.hobbies || []

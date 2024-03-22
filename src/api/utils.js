@@ -57,9 +57,9 @@ export const returnInvalidMethodError = (res) => {
   res.end(JSON.stringify({ error: "Method Not Allowed" }))
 }
 
-export const returnWrongDataError = (res) => {
-  res.writeHead(422, { "Content-Type": "application/json" })
-  res.end(JSON.stringify({ data: null, error: "Invalid data" }))
+export const returnBadRequestError = (res) => {
+  res.writeHead(400, { "Content-Type": "application/json" })
+  res.end(JSON.stringify({ data: null, error: "Bad Request" }))
 }
 
 export const returnServerError = (res) => {

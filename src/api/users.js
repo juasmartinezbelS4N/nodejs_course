@@ -5,7 +5,7 @@ import {
   createUser,
   parseData,
   returnInvalidPageError,
-  returnWrongDataError,
+  returnBadRequestError,
 } from "./utils.js"
 import database from "./database.js"
 
@@ -36,7 +36,7 @@ export const postUsers = async (req, res) => {
     return
   }
   if (!reqBody.name || !reqBody.email) {
-    returnWrongDataError(res)
+    returnBadRequestError(res)
     return
   }
   res.writeHead(201, { "Content-Type": "application/json" })

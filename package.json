@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "./node_modules/.bin/pm2 start index.js --name ngmp-network-app",
-    "stop": "./node_modules/.bin/pm2 stop ngmp-network-app"
+    "start": "pm2 start index.js --name ngmp-network-app",
+    "stop": "pm2 stop ngmp-network-app"
   },
   "repository": {
     "type": "git",
