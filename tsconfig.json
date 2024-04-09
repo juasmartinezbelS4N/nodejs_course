@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2020",
+
     "lib": ["es6"],
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": "src/module_6/",
     "strict": true,
     "noImplicitAny": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-  }
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "CommonJS"
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src/module_6/**/*.ts"],
+  "exclude": ["node_modules/"]
 }
