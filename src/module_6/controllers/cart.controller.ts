@@ -1,11 +1,7 @@
 import { Request, Response } from "express"
 import * as CartService from "../services/cart.service"
 import * as OrderService from "../services/order.service"
-import {
-  CartResponse,
-  CheckoutResponse,
-  DeleteResponse,
-} from "../types"
+import { CartResponse, CheckoutResponse, DeleteResponse } from "../types"
 
 const DEFAULT_RESPONSE: CheckoutResponse | CartResponse = {
   data: null,
@@ -23,15 +19,11 @@ const setResponse = (
 }
 
 const getUserId = (xUserId: string | string[] | undefined): string | null => {
-  if (!xUserId) return null
-  return typeof xUserId === "string" ? xUserId : xUserId[0]
+  return typeof xUserId === "string" ? xUserId : xUserId![0]
 }
 
 export const getCart = (req: Request, res: Response) => {
-  const userId = getUserId(req.headers["x-user-id"])
-  if (userId === null) {
-    return res.status(403).json(setResponse("Invalid user"))
-  }
+  const userId = getUserId(req.headers["x-user-id"])!
 
   const cart = CartService.getCartByUserId(userId)
   if (!cart) {
@@ -46,16 +38,11 @@ export const getCart = (req: Request, res: Response) => {
 }
 
 export const putCart = (req: Request, res: Response) => {
-  const userId = getUserId(req.headers["x-user-id"])
-  if (userId === null) {
-    return res.status(403).json(setResponse("Invalid User"))
-  }
+  const userId = getUserId(req.headers["x-user-id"])!
   const body = req.body
   console.log(body)
   if (!body) {
-    return res
-      .status(400)
-      .json(setResponse("Products are not valid"))
+    return res.status(400).json(setResponse("Products are not valid"))
   }
 
   const cart = CartService.updateUserCart(userId, body)
@@ -71,10 +58,7 @@ export const putCart = (req: Request, res: Response) => {
 }
 
 export const deleteCart = (req: Request, res: Response) => {
-  const userId = getUserId(req.headers["x-user-id"])
-  if (userId === null) {
-    return res.status(403).json(setResponse("Invalid user"))
-  }
+  const userId = getUserId(req.headers["x-user-id"])!
   const deleted = CartService.deleteUserCart(userId)
   const response: DeleteResponse = {
     data: {
@@ -87,10 +71,7 @@ export const deleteCart = (req: Request, res: Response) => {
 
 export const checkoutCart = (req: Request, res: Response) => {
   const xUserId = req.headers["x-user-id"]
-  const userId = getUserId(xUserId)
-  if (userId === null) {
-    return res.status(403).json(setResponse("Invalid user"))
-  }
+  const userId = getUserId(xUserId)!
 
   const order = OrderService.checkoutOrder(userId)
   if (!order) {

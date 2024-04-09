@@ -8,7 +8,7 @@ import * as CartController from "./controllers/cart.controller"
 
 export const productToPutSchema = joi
   .object({
-    productId: joi.string().required(),
+    productId: joi.string().uuid().required(),
     count: joi.number().min(0).required(),
   })
   .required()
