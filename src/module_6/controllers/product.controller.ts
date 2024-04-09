@@ -2,8 +2,6 @@ import * as ProductService from "../services/product.service"
 import { ProductsResponse, Request, Response } from "../types"
 
 export const getProducts = async (_req: Request, res: Response) => {
-  console.log("req", _req)
-  console.log("res", res)
   const products = ProductService.getAllProducts()
   const response: ProductsResponse = {
     data: products,

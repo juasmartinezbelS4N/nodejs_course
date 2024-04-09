@@ -1,7 +1,9 @@
 import { Request, Response } from "express"
 import * as CartService from "../services/cart.service"
+import {getProductById} from "../services/product.service"
 import * as OrderService from "../services/order.service"
 import { CartResponse, CheckoutResponse, DeleteResponse } from "../types"
+import database from "../database"
 
 const DEFAULT_RESPONSE: CheckoutResponse | CartResponse = {
   data: null,
@@ -43,6 +45,10 @@ export const putCart = (req: Request, res: Response) => {
   console.log(body)
   if (!body) {
     return res.status(400).json(setResponse("Products are not valid"))
+  }
+
+  if (!getProductById(body.productId)) {
+    return res.status(404).json(setResponse("Product not found"))
   }
 
   const cart = CartService.updateUserCart(userId, body)

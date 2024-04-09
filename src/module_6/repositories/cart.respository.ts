@@ -8,7 +8,7 @@ export function getCarts(): Cart[] {
 }
 
 export const getCart = (userId: string): Cart | undefined => {
-  const userCart = carts.find((cart) => cart.userId == userId)
+  const userCart = database.carts.find((cart) => cart.userId == userId)
   return userCart || undefined
 }
 
@@ -32,9 +32,10 @@ export const addCart = (cart: Cart) => {
 export const deleteCart = (cartId: string): boolean => {
   const newCarts: Cart[] = []
   let wasDeleted = false
-  for (const index in carts) {
-    const currentCart = carts[index]
+  for (const index in database.carts) {
+    const currentCart = database.carts[index]
     if (currentCart.id !== cartId) {
+      newCarts.push(currentCart)
     } else {
       wasDeleted = true
     }
