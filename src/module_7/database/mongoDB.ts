@@ -3,14 +3,18 @@ import * as UserEntities from "./schemas/user.entity"
 import * as ProductEntities from "./schemas/product.entity"
 import User from "./documents/user.document"
 import Product from "./documents/product.document"
+import 'dotenv/config'
+
 
 const startMongo = () => {
   const uri: string = "mongodb://localhost:27017"
   const options: ConnectOptions = {
-    dbName: "mydatabase",
-    user: "root",
-    pass: "nodegmp",
+    dbName: process.env.DB_NAME,
+    user: process.env.USER_ROOT,
+    pass: process.env.SECRET_KEY,
   }
+
+  console.log('options', options)
   mongoose
     .connect(uri, options)
     .then(() => {
