@@ -3,7 +3,7 @@
 
     "lib": ["es6"],
     "outDir": "dist",
-    "rootDir": "src/module_6/",
+    "rootDir": "src/module_7",
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
@@ -16,6 +16,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": ["src/module_6/**/*.ts"],
+  "include": ["src/module_7/**/*.ts"],
   "exclude": ["node_modules/"]
 }

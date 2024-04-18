@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && pm2 start dist/module_6/index.js --name ngmp-network-app",
+    "start": "tsc && pm2 start dist/index.js --name ngmp-network-app",
     "stop": "rm -rf dist && pm2 stop ngmp-network-app",
-    "dev": "tsx src/module_6/index.ts"
+    "dev": "tsx src/module_7/index.ts",
+    "logs": "pm2 logs",
+    "podman": "podman compose -f podman-compose.yml up -d"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/jest": "^29.0.0",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.16",
     "@types/supertest": "^2.0.12",
     "jest": "^29.0.3",
@@ -31,12 +34,15 @@
     "ts-jest": "^29.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.7.2",
-    "typescript": "^5.5.0-dev.20240408"
+    "typescript": "^5.4.2"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "csvtojson": "^2.0.10",
+    "dotenv": "^16.4.5",
     "express": "^5.0.0-beta.2",
-    "joi": "^17.12.2"
+    "joi": "^17.12.2",
+    "mongoose": "^8.2.3",
+    "pm2": "^5.3.1"
   }
 }
