@@ -2,9 +2,8 @@ import { Request, Response } from "express"
 import * as CartService from "../services/cart.service"
 import { getProductById } from "../services/product.service"
 import * as OrderService from "../services/order.service"
-import { updateUserOrder } from "../repositories/user.repository"
-import { CartEntity } from "../database/schemas/cart.entity"
-import { OrderEntity } from "../database/schemas/order.entity"
+import { Cart } from "../database/entities/cart"
+import { Order } from "../database/entities/order"
 import { CartResponse, CheckoutResponse, DeleteResponse } from "../types"
 
 const DEFAULT_RESPONSE: CheckoutResponse | CartResponse = {
@@ -28,7 +27,6 @@ const getUserId = (xUserId: string | string[] | undefined): string | null => {
 
 export const getCart = async (req: Request, res: Response) => {
   const userId = getUserId(req.headers["x-user-id"])!
-
   const cart = await CartService.getCartByUserId(userId)
   if (!cart) {
     return res.status(404).json(setResponse("Cart not found"))
@@ -44,7 +42,6 @@ export const getCart = async (req: Request, res: Response) => {
 export const putCart = async (req: Request, res: Response) => {
   const userId = getUserId(req.headers["x-user-id"])!
   const body = req.body
-  console.log(body)
   if (!body) {
     return res.status(400).json(setResponse("Products are not valid"))
   }
@@ -53,7 +50,7 @@ export const putCart = async (req: Request, res: Response) => {
     return res.status(404).json(setResponse("Product not found"))
   }
 
-  const cart = <CartEntity>await CartService.updateUserCart(userId, body)
+  const cart = <Cart>await CartService.updateUserCart(userId, body)
   if (!cart) {
     return res.status(404).json(setResponse("Cart was not found"))
   }
@@ -86,9 +83,8 @@ export const checkoutCart = async (req: Request, res: Response) => {
     return res.status(400).json(setResponse("There is no order in cart"))
   }
   await CartService.deleteUserCart(userId)
-  await updateUserOrder(userId, order)
   const response = setResponse(null, {
-    order: <OrderEntity>order,
+    order: <Order>order,
   })
   return res.status(200).json(response)
 }

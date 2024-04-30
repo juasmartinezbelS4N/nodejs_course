@@ -11,7 +11,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "es6",
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "ts-node": {
     "esm": true

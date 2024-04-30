@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && pm2 start dist/index.js --name ngmp-network-app",
-    "stop": "rm -rf dist && pm2 stop ngmp-network-app",
-    "dev": "tsx src/module_7/index.ts",
+    "stop": "rm -rf dist && rm -rf temp && pm2 stop ngmp-network-app",
+    "dev": "tsx src/module_8/index.ts",
     "logs": "pm2 logs",
-    "podman": "podman compose -f podman-compose.yml up -d"
+    "podman": "podman compose -f podman-compose.yml up -d",
+    "populate": "npx mikro-orm migration:fresh --seed"
   },
   "repository": {
     "type": "git",
@@ -37,12 +38,27 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@mikro-orm/cli": "^6.2.3",
+    "@mikro-orm/core": "^6.2.3",
+    "@mikro-orm/entity-generator": "^6.2.3",
+    "@mikro-orm/migrations": "^6.2.3",
+    "@mikro-orm/postgresql": "^6.2.3",
+    "@mikro-orm/reflection": "^6.2.3",
+    "@mikro-orm/seeder": "^6.2.3",
     "axios": "^0.27.2",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
     "express": "^5.0.0-beta.2",
     "joi": "^17.12.2",
     "mongoose": "^8.2.3",
+    "pg": "^8.11.5",
     "pm2": "^5.3.1"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/module_8/database/config/orm.config.ts",
+      "./dist/database/config/orm.config.ts"
+    ]
   }
 }

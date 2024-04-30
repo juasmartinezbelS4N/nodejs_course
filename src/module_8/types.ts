@@ -1,7 +1,7 @@
 import express from "express"
-import { ProductEntity } from "./database/schemas/product.entity"
-import { CartEntity } from "./database/schemas/cart.entity"
-import { OrderEntity } from "./database/schemas/order.entity"
+import { Product } from "./database/entities/product"
+import { Cart } from "./database/entities/cart"
+import { Order } from "./database/entities/order"
 
 type Nullable<T> = T | null
 export type NullablePromise<T> = Promise<T | null>
@@ -18,18 +18,18 @@ export type Response = express.Response
 /** Responses and Requests **/
 
 export type SingleProductResponse = {
-  data?: Nullable<ProductEntity>
+  data?: Nullable<Product>
   error?: ResponseError
 }
 
 export type ProductsResponse = {
-  data: Nullable<ProductEntity[] | ProductEntity>
+  data: Nullable<Product[] | Product>
   error?: ResponseError
 }
 
 export type CartResponse = {
   data: Nullable<{
-    cart: CartEntity
+    cart: Cart
     total: number
   }>
   error?: ResponseError
@@ -37,7 +37,7 @@ export type CartResponse = {
 
 export type CheckoutResponse = {
   data: Nullable<{
-    order: OrderEntity
+    order: Order
   }>
   error?: ResponseError
 }

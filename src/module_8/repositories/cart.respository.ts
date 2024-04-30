@@ -1,30 +1,36 @@
-import Cart, { ICart } from "../database/documents/cart.document"
-import { IUser } from "../database/documents/user.document"
+import { LoadStrategy } from "@mikro-orm/core"
+import { randomUUID } from "crypto"
+import { DI } from "../index"
+import { Cart } from "../database/entities/cart"
+import { User } from "../database/entities/user"
 
-export const getCarts = async (): Promise<ICart[]> => {
-  return await Cart.find()
+export const getCarts = async () => {
+  return await DI.cartRepository.findAll()
 }
 
-export const getCart = async (userId: string) => {
-  return await Cart.findOne({ userId: userId })
-    .populate({
-      path: "items",
-      model: "CartItem",
-    })
-    .exec()
+export const getCart = async (userId?: string) => {
+  return await DI.orm.em.findOne(
+    Cart,
+    { user: userId },
+    {
+      populate: ["items", "items.product"],
+      strategy: LoadStrategy.JOINED,
+    }
+  )
 }
 
-export const addCart = async (user: IUser): Promise<ICart | null> => {
-  const cart = new Cart({
-    userId: user.id,
-  })
-  return await cart.save();
+export const addCart = async (user: User) => {
+  const newCart = new Cart()
+  newCart.user = user
+  await DI.orm.em.persistAndFlush(newCart)
+  return newCart
 }
 
-export const updateCart = async (cart: ICart): Promise<ICart | null> => {
-  return await Cart.findByIdAndUpdate(cart.id, cart)
+export const updateCart = async (cart: Cart) => {
+  await DI.orm.em.persist(cart).flush()
+  return cart
 }
 
-export const deleteCart = async (cart: ICart): Promise<ICart | null> => {
-  return await Cart.findByIdAndDelete(cart._id)
+export const deleteCart = async (cart: Cart) => {
+  return await DI.cartRepository.nativeDelete(cart)
 }
