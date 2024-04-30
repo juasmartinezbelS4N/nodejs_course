@@ -21,7 +21,7 @@ const options: Options<PostgreSqlDriver> = {
     Product,
     User,
   ],
-  host: "localhost",
+  host: process.env.HOST,
   port: parseInt(process.env.DB_PORT!, 10),
   user: process.env.USER_ROOT,
   password: process.env.SECRET_KEY,
