@@ -1,10 +1,9 @@
-import Product, { IProduct } from "../database/documents/product.document"
-import { NullablePromise } from "../types"
+import { DI } from "../index";
 
-export const getProducts = async (): NullablePromise<IProduct[]> => {
-  return await Product.find()
-}
+export const getProducts = async () => {
+  return await DI.productRepository.findAll();
+};
 
-export const getProduct = async (id: string): NullablePromise<IProduct> => {
-  return await Product.findById(id)
-}
+export const getProduct = async (id: string) => {
+  return await DI.productRepository.findOne(id);
+};
