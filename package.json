@@ -22,8 +22,10 @@
   },
   "homepage": "https://github.com/juasmartinezbelS4N/nodejs_course#readme",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.0.0",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.16",
     "@types/supertest": "^2.0.12",
@@ -46,10 +48,12 @@
     "@mikro-orm/reflection": "^6.2.3",
     "@mikro-orm/seeder": "^6.2.3",
     "axios": "^0.27.2",
+    "bcrypt": "^5.1.1",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
     "express": "^5.0.0-beta.2",
     "joi": "^17.12.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.3",
     "pg": "^8.11.5",
     "pm2": "^5.3.1"

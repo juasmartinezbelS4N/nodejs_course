@@ -2,6 +2,7 @@ import express from "express"
 import { ProductEntity } from "./database/schemas/product.entity"
 import { CartEntity } from "./database/schemas/cart.entity"
 import { OrderEntity } from "./database/schemas/order.entity"
+import { UserEntity } from "./database/schemas/user.entity"
 
 type Nullable<T> = T | null
 export type NullablePromise<T> = Promise<T | null>
@@ -14,6 +15,8 @@ export type Express = express.Express
 export type Next = express.NextFunction
 export type Request = express.Request
 export type Response = express.Response
+
+export type UserRegisterData = Pick<UserEntity, "email" | "password" | "role">
 
 /** Responses and Requests **/
 
@@ -40,6 +43,22 @@ export type CheckoutResponse = {
     order: OrderEntity
   }>
   error?: ResponseError
+}
+
+export type SignUpResponse = {
+  data: Nullable<{
+    id: string
+    email: string
+    role: "admin" | "user"
+  }>
+  error: ResponseError
+}
+
+export type SignInResponse = {
+  data: Nullable<{
+    token: string
+  }>
+  error: ResponseError
 }
 
 export type DeleteResponse = {
