@@ -1,6 +1,7 @@
+import bcrypt from "bcrypt";
 import User, { IUser } from "../database/documents/user.document"
 import { ICart } from "../database/documents/cart.document"
-import { NullablePromise } from "../types"
+import { NullablePromise, UserRegisterData } from "../types"
 import { IOrder } from "../database/documents/order.document"
 
 export const getUsers = async (): NullablePromise<IUser[]> => {
@@ -10,6 +11,16 @@ export const getUsers = async (): NullablePromise<IUser[]> => {
 export const getUser = async (id: string): NullablePromise<IUser> => {
   return await User.findById(id)
 }
+
+export const getUserByEmail = async (email: string) => {
+  return await User.findOne({ email: email });
+};
+
+export const addUser = async (userToSave: UserRegisterData) => {
+  const encryptedPassword = await bcrypt.hash(userToSave.password, 10);
+  const user = new User({...userToSave, password: encryptedPassword });
+  return await user.save();
+};
 
 export const updateUser = async (
   userId: string,

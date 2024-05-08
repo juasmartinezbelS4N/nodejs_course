@@ -21,13 +21,6 @@ const startMongo = () => {
       console.log("Succesfully connected to MongoDB")
     })
     .then(() => {
-      User.create({
-        _id: UserEntities.user.id,
-        ...UserEntities.user,
-      })
-      console.log("User successfully created")
-    })
-    .then(() => {
       Product.insertMany([
         {
           _id: ProductEntities.book.id,

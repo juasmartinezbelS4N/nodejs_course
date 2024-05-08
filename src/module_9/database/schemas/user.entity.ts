@@ -3,14 +3,9 @@ import { OrderEntity } from "./order.entity"
 
 export type UserEntity = {
   id: string
-  name: string
   email: string
+  password: string
+  role: 'admin' | 'user'
   cart?: CartEntity
   orders?: OrderEntity[]
-}
-
-export const user: UserEntity = {
-  id: "3e999371-d6d0-463c-8d9d-ac864098f8bb",
-  email: "sadmin@test.com",
-  name: "Super Admin",
 }
