@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && pm2 start dist/index.js --name ngmp-network-app",
     "stop": "rm -rf dist && rm -rf temp && pm2 stop ngmp-network-app",
-    "dev": "tsx src/module_9/index.ts",
+    "dev": "tsx src/module_10/index.ts",
     "logs": "pm2 logs",
     "podman": "podman compose -f podman-compose.yml up -d",
     "populate": "npx mikro-orm migration:fresh --seed"
