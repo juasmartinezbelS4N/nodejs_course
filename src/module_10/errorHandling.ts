@@ -1,4 +1,5 @@
 import { Next, Request, Response, ResponseError } from "./types"
+import { logger } from "./logger"
 import joi from "joi"
 
 export const errorHandler = (
@@ -7,7 +8,7 @@ export const errorHandler = (
   res: Response,
   next: Next
 ) => {
-  console.error(err.message) // Log the error for debugging purposes
+  logger.error(err.message) // Log the error for debugging purposes
   const response: {data: null, error: ResponseError} = {
     data: null,
     error: null

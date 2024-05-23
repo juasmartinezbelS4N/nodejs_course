@@ -1,11 +1,45 @@
 version: '3'
 services:
+  app:
+    container_name: my_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - USER_ROOT=${USER_ROOT}
+      - SECRET_KEY=${SECRET_KEY}
+      - SERVER_PORT=${SERVER_PORT}
+      - DB_PORT=${DB_PORT}
+      - HOST=${HOST}
+      - TOKEN_KEY=${TOKEN_KEY}
+      - NODE_ENV=${NODE_ENV}
+    depends_on:
+      - mongo
+    networks:
+      - my_network
   mongo:
     image: "mongo"
     container_name: "nodegmp-nosql"
     restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=nodegmp
+      - MONGO_INITDB_ROOT_USERNAME=${USER_ROOT}
+      - MONGO_INITDB_ROOT_PASSWORD=${SECRET_KEY}
     ports:
       - '27017:27017'
+    networks:
+      - my_network
+    volumes:
+      - mongo-data:/data/db
+
+
+networks:
+  my_network:
+
+volumes:
+  mongo-data:

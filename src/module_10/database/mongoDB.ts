@@ -1,10 +1,8 @@
 import mongoose, { ConnectOptions } from "mongoose"
-import * as UserEntities from "./schemas/user.entity"
 import * as ProductEntities from "./schemas/product.entity"
-import User from "./documents/user.document"
 import Product from "./documents/product.document"
-import 'dotenv/config'
-
+import { logger } from "../logger"
+import "dotenv/config"
 
 const startMongo = () => {
   const uri: string = `mongodb://localhost:${process.env.DB_PORT}`
@@ -14,11 +12,10 @@ const startMongo = () => {
     pass: process.env.SECRET_KEY,
   }
 
-  console.log('options', options)
   mongoose
     .connect(uri, options)
     .then(() => {
-      console.log("Succesfully connected to MongoDB")
+      logger.info("Succesfully connected to MongoDB")
     })
     .then(() => {
       Product.insertMany([
@@ -35,10 +32,10 @@ const startMongo = () => {
           ...ProductEntities.notebook,
         },
       ])
-      console.log("Products successfully created")
+      logger.info("Products successfully created")
     })
     .catch((error: Error) => {
-      console.log(`Error connecting to MongoDB: ${error.message}`)
+      logger.error(`Error connecting to MongoDB: ${error.message}`)
     })
 }
 

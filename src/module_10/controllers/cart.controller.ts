@@ -6,6 +6,7 @@ import { updateUserOrder } from "../repositories/user.repository"
 import { CartEntity } from "../database/schemas/cart.entity"
 import { OrderEntity } from "../database/schemas/order.entity"
 import { CartResponse, CheckoutResponse, DeleteResponse } from "../types"
+import { logger } from "../logger"
 
 const DEFAULT_RESPONSE: CheckoutResponse | CartResponse = {
   data: null,
@@ -44,7 +45,7 @@ export const getCart = async (req: Request, res: Response) => {
 export const putCart = async (req: Request, res: Response) => {
   const userId = getUserId(req.headers["x-user-id"])!
   const body = req.body
-  console.log(body)
+  logger.info(body)
   if (!body) {
     return res.status(400).json(setResponse("Products are not valid"))
   }
