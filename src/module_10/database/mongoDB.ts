@@ -5,7 +5,7 @@ import { logger } from "../logger"
 import "dotenv/config"
 
 const startMongo = () => {
-  const uri: string = `mongodb://localhost:${process.env.DB_PORT}`
+  const uri: string = `mongodb://${process.env.HOST}:${process.env.DB_PORT}`
   const options: ConnectOptions = {
     dbName: process.env.DB_NAME,
     user: process.env.USER_ROOT,
