@@ -1,4 +1,5 @@
 import { UpdateCartBody } from "../types"
+import { logger } from "../logger"
 import * as CartRepository from "../repositories/cart.respository"
 import { getProduct } from "../repositories/product.repository"
 import { updateUser } from "../repositories/user.repository"
@@ -57,7 +58,7 @@ export const updateUserCart = async (userId: string, body: UpdateCartBody) => {
 export const deleteUserCart = async (userId: string) => {
   const cart = await CartRepository.getCart(userId)
   if (cart) {
-    console.log('deleted', await CartRepository.deleteCart(cart))
+    logger.info('deleted', await CartRepository.deleteCart(cart))
     const updatedCart = await CartRepository.getCart(userId)
     if(updatedCart !== null) return false
     await updateUser(userId, {});

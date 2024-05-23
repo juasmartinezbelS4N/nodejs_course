@@ -6,6 +6,7 @@ import {
   UserRegisterData,
 } from "../types"
 import * as UserService from "../services/user.service"
+import { logger } from "../logger"
 
 export const register = async (req: Request, res: Response) => {
   const response: SignUpResponse = {
@@ -26,37 +27,34 @@ export const register = async (req: Request, res: Response) => {
     }
     return res.status(200).json(response)
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     response.error = { message: "Internal Server Error" }
     res.status(500).send(response)
   }
 }
 
-export const login = async (
-  req: Request,
-  res: Response,
-) => {
+export const login = async (req: Request, res: Response) => {
   const response: SignInResponse = {
     data: null,
     error: null,
-  };
+  }
 
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body
 
-    const token = await UserService.login(email, password);
+    const token = await UserService.login(email, password)
 
     if (!token) {
-      response.error = { message: "No user with such email or password" };
-      return res.status(404).json(response);
+      response.error = { message: "No user with such email or password" }
+      return res.status(404).json(response)
     }
     response.data = {
       token: token,
-    };
-    return res.status(200).json(response);
+    }
+    return res.status(200).json(response)
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     response.error = { message: "Internal Server Error" }
     res.status(500).send(response)
   }
-};
+}
